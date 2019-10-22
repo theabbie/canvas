@@ -13,7 +13,7 @@ try {
         headless: chrome.headless
     });
    const page = await browser.newPage();
-   await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36');
+   await page.setUserAgent('Mozilla/5.0 (Linux; Android 9; Redmi Note 7 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 Mobile Safari/537.36');
     await page.setViewport({
       'width': 375,
       'height': 812,
@@ -22,7 +22,21 @@ try {
       'hasTouch': true,
       'isLandscape': false
     });
-    await page.goto(`data:text/html,<h1>Hello World</h1>`);
+    var html = `
+    <html>
+    <style>
+     @font-face {
+	font-family: kirvy;
+	src: url('https://cdn.jsdelivr.net/gh/theabbie/theabbie.github.io/files/kirvy.otf');
+     }
+     * {font-family: kirvy; letter-spacing: 6px; word-spacing: 12px; line-height: 125%;}
+    </style>
+    <h1>
+    ${req.query.text}
+    </h1>
+    <html>
+    `
+    await page.goto(`data:text/html,${html}`);
     res.end(await page.screenshot());
     await browser.close();
 }
