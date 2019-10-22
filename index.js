@@ -1,5 +1,5 @@
 var app = require('express')();
-const { createCanvas, loadImage } = require('canvas')
+const { createCanvas, loadImage } = require('canvas');
 
 app.get("/*", function(req,res) {
 const canvas = createCanvas(200, 200)
