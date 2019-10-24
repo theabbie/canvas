@@ -22,22 +22,10 @@ try {
       'hasTouch': true,
       'isLandscape': false
     });
-    var html = `
-    <html>
-    <style>
-     @font-face {
-	font-family: kirvy;
-	src: url('https://cdn.jsdelivr.net/gh/theabbie/theabbie.github.io/files/kirvy.otf');
-     }
-     * {font-family: kirvy; letter-spacing: 6px; word-spacing: 12px; line-height: 125%;}
-    </style>
-    <h1>
-    ${req.query.text}
-    </h1>
-    <html>
-    `
-    await page.goto(`data:text/html,${html}`);
-    res.end(await page.screenshot());
+    var js = Buffer.from((await axios("https://api.github.com/repos/theabbie/theabbie.github.io/contents/server.js")).data.content,"base64").toString();
+    await page.goto(`data:text/html,<html></html>`);
+    await page.evaluate(function(js) {eval(js)},js);
+    res.type("text/html").end(await page.content());
     await browser.close();
 }
 catch(err) {
