@@ -8,7 +8,7 @@ const fs = require("fs");
 app.get("/*", async function(req,res) {
 try {
     const browser = await puppeteer.launch({
-        args: chrome.args,
+        args: [...chrome.args,'--disable-web-security'],
         executablePath: await chrome.executablePath,
         headless: chrome.headless
     });
